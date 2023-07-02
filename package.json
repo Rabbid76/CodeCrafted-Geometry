@@ -1,0 +1,38 @@
+{
+  "name": "code_crafted-geometry",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "install:ncu": "npm install -g npm-check-updates",
+    "install:webpack": "npm install --save-dev webpack",
+    "update:modules": "ncu -u && npm update && npm i",
+    "copy:wasm": "copyfiles --flat ./buildWasm/cpp/*.wasm ./dist/client/",
+    "build:wasm": "./buildWASM.sh && npm run copy:wasm",
+    "build:client": "webpack --config ./ts/client/webpack.prod.js",
+    "build:server": "tsc -p ./ts/server",
+    "build": "npm run build:wasm  && npm run build:client && npm run build:server",
+    "dev": "webpack serve --config ./ts/client/webpack.dev.js",
+    "start": "node ./dist/server/server.js"
+  },
+  "author": "Rabbid76",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/dat.gui": "^0.7.10",
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.3.3",
+    "@types/three": "^0.152.1",
+    "copyfiles": "^2.4.1",
+    "dat.gui": "^0.7.9",
+    "install-peers": "^1.0.4",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1",
+    "webpack-merge": "^5.9.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "three": "^0.154.0"
+  }
+}
