@@ -10,7 +10,6 @@
 
 ### Project
 
-- C++ unit tests, [Catch2](https://github.com/catchorg/Catch2)
 - TypeScrit/JavaScript unit tests, [jest](https://jestjs.io/)  
 - CMakeLists.txt find Emscripten toolchain
 - MeshGeneratorJs.d.ts MeshGenerator.d.ts
