@@ -10,9 +10,10 @@
 
 ### Project
 
-- TypeScrit/JavaScript unit tests, [jest](https://jestjs.io/)  
 - CMakeLists.txt find Emscripten toolchain
-- MeshGeneratorJs.d.ts MeshGenerator.d.ts
-- webpack bundle ASM.js and WASM
+- CodeCraftedGeometryJs.d.ts CodeCraftedGeometry.d.ts
 - Emscripten bindings generator
+- webpack bundle ASM.js and WASM
 - github actions build and test
+- [jest](https://jestjs.io/) load .wasm
+- create C++ preprocessor definition from package.json version

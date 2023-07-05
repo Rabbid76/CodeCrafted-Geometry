@@ -27,7 +27,7 @@ namespace
 
    std::string getVersion()
    {
-      return "1.0.0";
+      return "0.0.1";
    }
 
    void setIOContext(emscripten::val ioContext)

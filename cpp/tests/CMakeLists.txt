@@ -11,7 +11,7 @@ add_compile_options(
 include_directories (
     "./"
     "../"
-    "../../submodules/catch2/extras"
+    "../../submodules/Catch2/extras"
     )
 
 set(
