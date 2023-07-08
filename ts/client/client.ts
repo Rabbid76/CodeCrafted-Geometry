@@ -5,8 +5,7 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 // @ts-ignore
 import Stats from 'three/examples/jsm/libs/stats.module' 
 import { GUI } from 'dat.gui'
-// @ts-ignore
-import * as CodeCraftedGeometry from '../../buildWasm/cpp/CodeCraftedGeometryWasm.js';
+import { default as CodeCraftedGeometry } from '../../buildWasm/cpp/CodeCraftedGeometryWasm';
 
 export const helloCube = async (canvas: any) => {
     const meshGenerator = await CodeCraftedGeometry();

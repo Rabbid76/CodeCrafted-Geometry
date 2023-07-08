@@ -11,8 +11,7 @@
 ### Project
 
 - CMakeLists.txt find Emscripten toolchain
-- CodeCraftedGeometryJs.d.ts CodeCraftedGeometry.d.ts
-- Emscripten TypeScript interface
+- setIOContext: any -> interface
 - webpack bundle ASM.js and WASM
 - github actions build and test
 - [jest](https://jestjs.io/) load .wasm
