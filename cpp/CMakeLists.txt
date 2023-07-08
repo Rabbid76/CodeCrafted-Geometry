@@ -15,6 +15,11 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
         )
 endif()
 
+include_directories(
+    "./"
+    "./src/"
+    )
+
 if (EMSCRIPTEN)
     set(EMSCRIPTEN_OPTIONS
         "SHELL:-s DISABLE_EXCEPTION_CATCHING=0"
@@ -44,7 +49,8 @@ if (EMSCRIPTEN)
 
     add_executable(
         CodeCraftedGeometryWasm
-        emscriptenBindings.cpp
+        embind/emscriptenInterface.h
+        embind/CodeCraftedGeometryEmbind.cpp
         )
     target_compile_options(CodeCraftedGeometryWasm PRIVATE
         ${EMSCRIPTEN_OPTIONS}
@@ -65,7 +71,8 @@ if (EMSCRIPTEN)
         )
     add_executable(
         CodeCraftedGeometryJs
-        emscriptenBindings.cpp
+        embind/emscriptenInterface.h
+        embind/CodeCraftedGeometryEmbind.cpp
         )
     target_compile_options(CodeCraftedGeometryJs PRIVATE ${EMSCRIPTEN_ASMJS_OPTIONS})
     target_link_options(CodeCraftedGeometryJs PRIVATE ${EMSCRIPTEN_ASMJS_OPTIONS} "SHELL:-s EXPORT_NAME=\"'CodeCraftedGeometry'\"")

@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+      "module": "nodenext",
+      "declaration": true,
+      "noImplicitAny": true,
+      "removeComments": true,
+      "preserveConstEnums": true,
+      "sourceMap": true,
+      "outDir": "../dist/.ci"
+    },
+    "paths": {
+        "@/*": [
+          ".ci/*"
+        ]
+      },
+    "include": [
+        "../.ci/**/*.ts"
+      ],
+      "exclude": [
+        "node_modules"
+      ]
+}

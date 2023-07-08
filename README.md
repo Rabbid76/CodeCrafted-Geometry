@@ -12,7 +12,7 @@
 
 - CMakeLists.txt find Emscripten toolchain
 - CodeCraftedGeometryJs.d.ts CodeCraftedGeometry.d.ts
-- Emscripten bindings generator
+- Emscripten TypeScript interface
 - webpack bundle ASM.js and WASM
 - github actions build and test
 - [jest](https://jestjs.io/) load .wasm

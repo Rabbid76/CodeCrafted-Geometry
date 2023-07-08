@@ -1,0 +1,30 @@
+{
+    "objects": [
+        {
+            "type": "function",
+            "name": "getVersion",
+            "tsType": "string",
+            "cppType": "std::string",
+            "cppInterface": "getVersion"
+        },
+        {
+            "type": "function",
+            "name": "setIOContext",
+            "cppType": "void",
+            "cppInterface": "setIOContext",
+            "parameters": [
+                { "name": "ioContext", "tsType": "any", "cppType": "emscripten::val" }
+            ]
+        },
+        {
+            "type": "function",
+            "name": "createMesh",
+            "cppType": "void",
+            "cppInterface": "createMesh",
+            "parameters": [
+                { "name": "id", "tsType": "string", "cppType": "std::string" },
+                { "name": "size", "tsType": "number", "cppType": "float" }
+            ]
+        }
+    ]
+}

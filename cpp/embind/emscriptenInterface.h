@@ -115,10 +115,3 @@ namespace
       }
    }
 }
-
-EMSCRIPTEN_BINDINGS(my_module)
-{
-   emscripten::function<std::string>("getVersion", &getVersion);
-   emscripten::function<void, emscripten::val>("setIOContext", &setIOContext);
-   emscripten::function<void, std::string, float>("createMesh", &createMesh);
-}
