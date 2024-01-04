@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-// @ts-ignore
 import Stats from 'three/examples/jsm/libs/stats.module' 
 import { GUI } from 'dat.gui'
 import { default as CodeCraftedGeometry } from '../../buildWasm/cpp/CodeCraftedGeometryWasm';
@@ -31,11 +30,7 @@ export const helloCube = async (canvas: any) => {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.outputEncoding = THREE.LinearEncoding;
-    //renderer.toneMapping = THREE.NoToneMapping;
-    //renderer.outputEncoding = THREE.sRGBEncoding;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-
+    
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.y = 2;
     camera.position.z = 4;
@@ -44,7 +39,7 @@ export const helloCube = async (canvas: any) => {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xc0c0c0);
     const pmremGenerator = new THREE.PMREMGenerator(renderer);
-    const environmentTexture = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
+    const environmentTexture = pmremGenerator.fromScene(new RoomEnvironment(renderer), 0.04).texture;
     scene.environment = environmentTexture;
     scene.background = environmentTexture;
 
