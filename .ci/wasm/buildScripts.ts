@@ -14,11 +14,7 @@ if (commands.length === 0) {
   console.log('no command found');
   commandError = true;
 } else {
-  const knownCommands: string[] = [
-    'build',
-    'build-debug',
-    'copyWasm4Test',
-  ];
+  const knownCommands: string[] = ['build', 'build-debug', 'copyWasm4Test'];
   for (const command of commands) {
     if (!knownCommands.includes(command)) {
       console.log(`unknown command: ${command}`);
@@ -30,7 +26,9 @@ if (commandError) {
   console.log('usage: node buildScripts.js <command1> <command2> ...');
   console.log('available commands:');
   console.log('  build - build wasm with wasm-exceptions and asm_js');
-  console.log('  build-debug - build wasm with wasm-exceptions and asm_js with debug information');
+  console.log(
+    '  build-debug - build wasm with wasm-exceptions and asm_js with debug information'
+  );
   process.exit(0);
 }
 

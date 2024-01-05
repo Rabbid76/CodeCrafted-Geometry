@@ -1,7 +1,7 @@
 .devcontainer
 .vscode
 build
-builtWasm
+buildWasm
 dist
 patches
 resource

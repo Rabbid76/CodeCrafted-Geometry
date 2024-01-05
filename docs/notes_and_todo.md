@@ -15,7 +15,6 @@
 - create C++ preprocessor definition from package.json version
 - vscode recommended extensions
 - eslint
-- wasm build script
 - clean code CodeCraftedGeometryWasm.d.ts
 
 ### Example ideas
