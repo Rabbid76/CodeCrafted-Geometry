@@ -7,11 +7,11 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "outDir": "../../dist/.ci/embind"
+    "outDir": "../dist/.ci"
   },
   "paths": {
     "@/*": [".ci/*"]
   },
-  "include": ["../../.ci/embind/**/*.ts"],
+  "include": ["../.ci/**/*.ts"],
   "exclude": ["node_modules", "**/*.d.ts"]
 }

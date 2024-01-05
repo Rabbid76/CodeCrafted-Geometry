@@ -16,6 +16,7 @@
 - vscode recommended extensions
 - eslint
 - wasm build script
+- clean code CodeCraftedGeometryWasm.d.ts
 
 ### Example ideas
 
