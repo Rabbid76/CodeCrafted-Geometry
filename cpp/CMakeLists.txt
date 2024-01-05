@@ -22,7 +22,6 @@ include_directories(
 
 if (EMSCRIPTEN)
     set(EMSCRIPTEN_OPTIONS
-        "SHELL:-s DISABLE_EXCEPTION_CATCHING=0"
         "SHELL:-s FILESYSTEM=0"
         "SHELL:-s MODULARIZE=1"
         "-lembind"
@@ -55,6 +54,7 @@ if (EMSCRIPTEN)
     target_compile_options(CodeCraftedGeometryWasm PRIVATE
         ${EMSCRIPTEN_OPTIONS}
         "SHELL:-s WASM=1"
+        -fwasm-exceptions
         )
     target_link_options(CodeCraftedGeometryWasm PRIVATE 
         ${EMSCRIPTEN_OPTIONS}
@@ -62,10 +62,12 @@ if (EMSCRIPTEN)
         "SHELL:-s EXPORT_NAME=\"'CodeCraftedGeometry'\""
         "SHELL:-s ENVIRONMENT=web"
         #"-lnodefs.js"
+        -fwasm-exceptions
         )
 
     set(EMSCRIPTEN_ASMJS_OPTIONS
         ${EMSCRIPTEN_OPTIONS}
+        "SHELL:-s DISABLE_EXCEPTION_CATCHING=0"
         "SHELL:-s WASM=0"
         "SHELL:--memory-init-file 1"
         )
