@@ -30,9 +30,7 @@ export const generateWasmInterfaces = async (
         let headerText =
           exportType == 'c++' ? '// This file was created automatically\n' : '';
         try {
-          const template: string = specification.template
-            ? await readTextFile(specification.template)
-            : '';
+          const template: string = await readTextFile(specification.template);
           const placeholder: string = '${DATA}';
           if (template && template.includes(placeholder)) {
             exportData = template.replace(placeholder, exportData);
@@ -486,17 +484,17 @@ const createTsInterface = (
   });
   interfaceDefinitions.vectors.forEach((element: VectorObject) => {
     if (element.object.tsType) {
-      classInterfaceData += `export interface ${element.object.name} extends EmscriptenArray<${element.object.tsType}> {\n}\n\n`;
+      classInterfaceData += `export type ${element.object.name} = EmscriptenArray<${element.object.tsType}>;\n\n`;
     }
   });
   interfaceDefinitions.maps.forEach((element: MapObject) => {
     if (element.object.tsKeyType && element.object.tsValueType) {
-      classInterfaceData += `export interface ${element.object.name} extends EmscriptenMap<${element.object.tsKeyType}, ${element.object.tsValueType}> {\n}\n\n`;
+      classInterfaceData += `export type ${element.object.name} = EmscriptenMap<${element.object.tsKeyType}, ${element.object.tsValueType}>;\n\n`;
     }
   });
   interfaceDefinitions.templates.forEach((element: TemplateObject) => {
     if (element.object.tsType) {
-      classInterfaceData += `export interface ${element.object.name} extends ${element.tsInterface}<${element.object.tsType}> {\n}\n\n`;
+      classInterfaceData += `export type ${element.object.name} = ${element.tsInterface}<${element.object.tsType}>;\n\n`;
     }
   });
   interfaceDefinitions.valueObjects.forEach((element: ValueObjectObject) => {
@@ -547,7 +545,7 @@ const createTsInterface = (
       const functionSignature = tsMethodSignature(element);
       classInterfaceData += `    ${functionSignature};\n`;
     });
-    classInterfaceData += `}\n\n`;
+    classInterfaceData += `}`;
   }
 
   let tsInterfaceData: string = `${classInterfaceData}`;
