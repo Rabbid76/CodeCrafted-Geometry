@@ -1,23 +1,16 @@
 {
-    "compilerOptions": {
-      "module": "nodenext",
-      "declaration": true,
-      "noImplicitAny": true,
-      "removeComments": true,
-      "preserveConstEnums": true,
-      "sourceMap": true,
-      "outDir": "../../dist/.ci/embind"
-    },
-    "paths": {
-        "@/*": [
-          ".ci/*"
-        ]
-      },
-    "include": [
-        "../../.ci/embind/**/*.ts"
-      ],
-      "exclude": [
-        "node_modules",
-        "**/*.d.ts"
-      ]
+  "compilerOptions": {
+    "module": "nodenext",
+    "declaration": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "outDir": "../../dist/.ci/embind"
+  },
+  "paths": {
+    "@/*": [".ci/*"]
+  },
+  "include": ["../../.ci/embind/**/*.ts"],
+  "exclude": ["node_modules", "**/*.d.ts"]
 }

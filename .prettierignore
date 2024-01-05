@@ -1,0 +1,11 @@
+.devcontainer
+.vscode
+build
+builtWasm
+dist
+patches
+resource
+node_modules
+submodules
+package-lock.json
+docs/CodeCraftedGeometryInterface.md
