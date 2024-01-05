@@ -41,11 +41,7 @@ if (commands.length === 0) {
     commandError = true;
 }
 else {
-    const knownCommands = [
-        'build',
-        'build-debug',
-        'copyWasm4Test',
-    ];
+    const knownCommands = ['build', 'build-debug', 'copyWasm4Test'];
     for (const command of commands) {
         if (!knownCommands.includes(command)) {
             console.log(`unknown command: ${command}`);
