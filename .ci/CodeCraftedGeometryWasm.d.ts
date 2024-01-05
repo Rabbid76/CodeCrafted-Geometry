@@ -1,3 +1,3 @@
-import { CodeCraftedGeometryContainer } from '../ts/client/embind/CodeCraftedGeometryInterface'
+import { CodeCraftedGeometryContainer } from '../ts/client/embind/CodeCraftedGeometryInterface';
 
-export default function CodeCraftedGeometry() : CodeCraftedGeometryContainer;
+export default function CodeCraftedGeometry(): CodeCraftedGeometryContainer;
