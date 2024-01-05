@@ -8,14 +8,13 @@
 
 ### Project
 
-- CMakeLists.txt find Emscripten toolchain (javascipt build script - see RoomleCore)
 - setIOContext: any -> interface
 - webpack bundle ASM.js and WASM
 - github actions build and test
 - [jest](https://jestjs.io/) load .wasm / copy wasm with webpack (`CopyWebpackPlugin` see three-js-ao-pass/bundler/webpack.common.js)
 - create C++ preprocessor definition from package.json version
-- github codespaces dev container
 - vscode recommended extensions
+- eslint
 
 ### Example ideas
 

@@ -2,7 +2,7 @@
 //import * as CodeCraftedGeometry from '../../buildWasm/cpp/CodeCraftedGeometryWasm.js';
 
 // @ts-ignore
-import * as CodeCraftedGeometry from '../../buildWasm/cpp/CodeCraftedGeometryJs';
+import CodeCraftedGeometry from '../../buildWasm/cpp/CodeCraftedGeometryJs';
 
 describe('load wasm', () => {
   it('get version', async () => {
