@@ -6,7 +6,7 @@ import Stats from 'three/examples/jsm/libs/stats.module';
 import { GUI } from 'dat.gui';
 import { default as CodeCraftedGeometry } from '../../buildWasm/cpp/CodeCraftedGeometryWasm';
 
-export const helloCube = async (canvas: any) => {
+export const helloCube = async (canvas: HTMLCanvasElement) => {
   const meshGenerator = await CodeCraftedGeometry();
   console.log('MeshGenerator version: ' + meshGenerator.getVersion());
   meshGenerator.setIOContext({
@@ -41,7 +41,7 @@ export const helloCube = async (canvas: any) => {
   });
 
   const renderer = new THREE.WebGLRenderer({
-    canvas: canvas,
+    canvas,
     antialias: true,
     alpha: true,
   });
@@ -120,7 +120,6 @@ export const helloCube = async (canvas: any) => {
 
   meshGenerator.createMesh('my shape', 2);
 
-  // @ts-ignore
   const stats = new Stats();
   document.body.appendChild(stats.dom);
   const gui = new GUI();
@@ -164,5 +163,7 @@ export const helloCube = async (canvas: any) => {
   requestAnimationFrame(animate);
 };
 
-// @ts-ignore
-helloCube(three_canvas);
+const threeCanvas = document.getElementById(
+  'three_canvas'
+) as HTMLCanvasElement;
+helloCube(threeCanvas);

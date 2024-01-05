@@ -2,15 +2,15 @@ import express from 'express';
 import path from 'path';
 import http from 'http';
 
-const port: number = 3000;
+const port: number = 3333;
 const hostname: string = '127.0.0.1';
 
 class App {
   private server: http.Server;
   private port: number;
 
-  constructor(port: number) {
-    this.port = port;
+  constructor(portNumber: number) {
+    this.port = portNumber;
     const app = express();
     app.use(express.static(path.join(__dirname, '../client')));
     this.server = new http.Server(app);

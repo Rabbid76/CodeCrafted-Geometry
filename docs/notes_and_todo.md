@@ -12,9 +12,8 @@
 - webpack bundle ASM.js and WASM
 - github actions build and test
 - [jest](https://jestjs.io/) load .wasm / copy wasm with webpack (`CopyWebpackPlugin` see three-js-ao-pass/bundler/webpack.common.js)
+- eslint ts/**test**
 - create C++ preprocessor definition from package.json version
-- vscode recommended extensions
-- eslint
 
 ### Example ideas
 

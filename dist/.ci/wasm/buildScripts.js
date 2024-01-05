@@ -31,7 +31,7 @@ const path = __importStar(require("path"));
 const fs = __importStar(require("fs"));
 const child_process_1 = __importDefault(require("child_process"));
 const glob = __importStar(require("glob"));
-const rootDirectoryName = `CodeCrafted-Geometry`;
+const rootDirectoryName = 'CodeCrafted-Geometry';
 const rootDir = '.';
 const wasmBuildDir = path.join('buildWasm');
 const commands = process_1.default.argv.slice(2);
@@ -87,10 +87,10 @@ const buildWasm = async (debug) => {
         console.log(`creating directory: ${wasmBuildDir}`);
         fs.mkdirSync(wasmBuildDir, { recursive: true });
     }
-    let cmakeCommand = `cmake -G "Unix Makefiles"` +
+    const cmakeCommand = 'cmake -G "Unix Makefiles"' +
         ` -DCMAKE_BUILD_TYPE=${debug ? 'Debug' : 'MinSizeRel'}` +
         ` -DCMAKE_TOOLCHAIN_FILE="${emSdkDir}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake"` +
-        ` -S .` +
+        ' -S .' +
         ` -B ${wasmBuildDir}`;
     console.log(`${cmakeCommand}`);
     child_process_1.default.execSync(cmakeCommand, { cwd: rootDir, stdio: 'inherit' });

@@ -34,16 +34,19 @@ export const generateWasmInterfaces = async (
           const placeholder: string = '${DATA}';
           if (template && template.includes(placeholder)) {
             exportData = template.replace(placeholder, exportData);
-            if (exportType == 'c++')
+            if (exportType == 'c++') {
               headerText += `// from ${specification.template}\n`;
+            }
           }
         } catch {}
-        if (headerText)
+        if (headerText) {
           await writeOutputFile(
             specification.filepath,
             headerText + '\n' + exportData
           );
-        else await writeOutputFile(specification.filepath, exportData);
+        } else {
+          await writeOutputFile(specification.filepath, exportData);
+        }
       }
     }
   );
@@ -232,18 +235,18 @@ interface InterfaceDefinition {
 }
 
 const interpretDefinition = (definition: any): InterfaceDefinition => {
-  let enums: EnumObject[] = [];
-  let valueObjects: ValueObjectObject[] = [];
-  let vectors: VectorObject[] = [];
-  let maps: MapObject[] = [];
-  let templates: TemplateObject[] = [];
-  let classes: ClassObject[] = [];
-  let functions: FunctionObject[] = [];
+  const enums: EnumObject[] = [];
+  const valueObjects: ValueObjectObject[] = [];
+  const vectors: VectorObject[] = [];
+  const maps: MapObject[] = [];
+  const templates: TemplateObject[] = [];
+  const classes: ClassObject[] = [];
+  const functions: FunctionObject[] = [];
   definition.objects?.forEach((element: ObjectDefinition) => {
     const lowerType: string = element.type.toLowerCase();
     if (lowerType == 'enum') {
       const enumElement = element as EnumDefinition;
-      let enumValues: ValueObject[] = [];
+      const enumValues: ValueObject[] = [];
       enumElement.values.forEach((enumValue: ValueDefinition) => {
         enumValues.push({ name: enumValue.value, object: enumValue });
       });
@@ -255,7 +258,7 @@ const interpretDefinition = (definition: any): InterfaceDefinition => {
       });
     } else if (lowerType == 'value_object') {
       const valueObjectElement = element as ValueObjectDefinition;
-      let fields: FieldObject[] = [];
+      const fields: FieldObject[] = [];
       valueObjectElement.fields.forEach((filed: FieldDefinition) => {
         fields.push({ name: filed.name, object: filed });
       });
@@ -265,7 +268,7 @@ const interpretDefinition = (definition: any): InterfaceDefinition => {
       valueObjects.push({
         name: element.name,
         object: valueObjectElement,
-        fields: fields,
+        fields,
       });
     } else if (lowerType == 'vector') {
       const vectorElement = element as VectorDefinition;
@@ -289,10 +292,10 @@ const interpretDefinition = (definition: any): InterfaceDefinition => {
       });
     } else if (lowerType == 'class') {
       const classElement = element as ClassDefinition;
-      let classFunctions: MethodObject[] = [];
-      let constructors: MethodObject[] = [];
-      let functions: MethodObject[] = [];
-      let properties: PropertyObject[] = [];
+      const classFunctions: MethodObject[] = [];
+      const constructors: MethodObject[] = [];
+      const functions: MethodObject[] = [];
+      const properties: PropertyObject[] = [];
       classElement.methods.forEach(
         (item: MethodDefinition | PropertyDefinition) => {
           const lowerMethodType: string = item.type.toLocaleLowerCase();
@@ -332,10 +335,10 @@ const interpretDefinition = (definition: any): InterfaceDefinition => {
       classes.push({
         name: element.name,
         object: classElement,
-        constructors: constructors,
-        classFunctions: classFunctions,
-        functions: functions,
-        properties: properties,
+        constructors,
+        classFunctions,
+        functions,
+        properties,
       });
     } else if (lowerType == 'function') {
       functions.push({
@@ -354,13 +357,13 @@ const interpretDefinition = (definition: any): InterfaceDefinition => {
   //functions.sort((a: FunctionObject, b: FunctionObject) => { return (a.name < b.name) ? -1 : ((a.name > b.name) ? 1 : 0) })
 
   return {
-    enums: enums,
-    valueObjects: valueObjects,
-    vectors: vectors,
-    maps: maps,
-    templates: templates,
-    classes: classes,
-    functions: functions,
+    enums,
+    valueObjects,
+    vectors,
+    maps,
+    templates,
+    classes,
+    functions,
   };
 };
 
@@ -395,7 +398,7 @@ const cppSmartPointerConstructorSignature = (
     );
   }
   const name = methodObject.object.cppInterface
-    ? `smart_ptr_constructor`
+    ? 'smart_ptr_constructor'
     : 'smart_ptr';
   const methodArgument = methodObject.object.cppInterface
     ? `, &${methodObject.object.cppInterface}`
@@ -438,13 +441,15 @@ const cppMethodSignature = (
         ? `(${classObject.cppType}&`
         : `(${classObject.cppType}::*)(`;
     for (let i = 0; i < methodObject.object.parameters?.length; ++i) {
-      if (i > 0 || methodObject.object.type == 'function')
+      if (i > 0 || methodObject.object.type == 'function') {
         templateSignature += ', ';
+      }
       templateSignature += `${methodObject.object.parameters[i].cppType}`;
     }
-    templateSignature += `)`;
-    if (methodObject.object.type == 'method_const')
-      templateSignature += ` const`;
+    templateSignature += ')';
+    if (methodObject.object.type == 'method_const') {
+      templateSignature += ' const';
+    }
   }
   const signature: string = `.function${
     templateSignature ? `<${templateSignature}>` : ''
@@ -458,8 +463,9 @@ const tsMethodSignature = (functionsDefinition: MethodObject): string => {
     for (let i = 0; i < functionsDefinition.object.parameters.length; i++) {
       const param = functionsDefinition.object.parameters[i];
       signature += `${param.name}: ${param.tsType || 'any'}`;
-      if (i < functionsDefinition.object.parameters.length - 1)
+      if (i < functionsDefinition.object.parameters.length - 1) {
         signature += ', ';
+      }
     }
   }
   signature += `) : ${functionsDefinition.object.tsType || 'void'}`;
@@ -480,7 +486,7 @@ const createTsInterface = (
         }\n`;
       }
     }
-    classInterfaceData += `}\n\n`;
+    classInterfaceData += '}\n\n';
   });
   interfaceDefinitions.vectors.forEach((element: VectorObject) => {
     if (element.object.tsType) {
@@ -506,7 +512,7 @@ const createTsInterface = (
         fields.object.optional ? '?' : ''
       }: ${fields.object.tsType || 'any'};\n`;
     });
-    classInterfaceData += `}\n\n`;
+    classInterfaceData += '}\n\n';
   });
   interfaceDefinitions.classes.forEach((element: ClassObject) => {
     classInterfaceData += `export interface ${element.object.name} {\n`;
@@ -525,7 +531,7 @@ const createTsInterface = (
       const access = !propertyDefinition.object.cppSetter ? 'readonly ' : '';
       classInterfaceData += `    ${access}${propertyDefinition.object.name} : ${propertyDefinition.object.tsType};\n`;
     });
-    classInterfaceData += `}\n\n`;
+    classInterfaceData += '}\n\n';
   });
   if (interfaceDefinitions.functions || interfaceDefinitions.classes) {
     classInterfaceData += `export interface ${containerName} {\n`;
@@ -545,10 +551,10 @@ const createTsInterface = (
       const functionSignature = tsMethodSignature(element);
       classInterfaceData += `    ${functionSignature};\n`;
     });
-    classInterfaceData += `}`;
+    classInterfaceData += '}';
   }
 
-  let tsInterfaceData: string = `${classInterfaceData}`;
+  const tsInterfaceData: string = `${classInterfaceData}`;
   return tsInterfaceData;
 };
 
@@ -692,7 +698,7 @@ const createMd = (
 ): string => {
   let docsData: string = '';
   if (interfaceDefinitions.enums.length > 0) {
-    docsData += `## Enums\n\n`;
+    docsData += '## Enums\n\n';
     interfaceDefinitions.enums.forEach((element: EnumObject) => {
       docsData += `- \`${element.object.name}\` :`;
       for (let i = 0; i < element.values.length; ++i) {
@@ -707,7 +713,7 @@ const createMd = (
     interfaceDefinitions.maps.length > 0 ||
     interfaceDefinitions.templates.length > 0
   ) {
-    docsData += `## Containers\n\n`;
+    docsData += '## Containers\n\n';
     if (interfaceDefinitions.vectors.length > 0) {
       interfaceDefinitions.vectors.forEach((element: VectorObject) => {
         docsData += `- \`${element.object.name}\` : array of \`${element.object.cppType}\`\n`;
@@ -726,7 +732,7 @@ const createMd = (
     docsData += '\n';
   }
   if (interfaceDefinitions.valueObjects.length > 0) {
-    docsData += `## Objects\n\n`;
+    docsData += '## Objects\n\n';
     interfaceDefinitions.valueObjects.forEach((element: ValueObjectObject) => {
       docsData += `### \`${element.object.name}\`\n\n`;
       if (element.fields !== undefined && element.fields.length > 0) {
@@ -735,19 +741,19 @@ const createMd = (
             fields.object.optional ? '?' : ''
           }: ${fields.object.tsType || 'any'}\`\n`;
         });
-        docsData += `\n`;
+        docsData += '\n';
       }
     });
   }
   if (interfaceDefinitions.classes.length > 0) {
-    docsData += `## Classes\n\n`;
+    docsData += '## Classes\n\n';
     interfaceDefinitions.classes.forEach((element: ClassObject) => {
       docsData += `### class \`${element.object.name}\`\n\n`;
       if (
         element.classFunctions !== undefined &&
         element.classFunctions.length > 0
       ) {
-        docsData += `class methods:\n\n`;
+        docsData += 'class methods:\n\n';
         element.classFunctions.forEach((functionsDefinition: MethodObject) => {
           const functionSignature = tsMethodSignature(functionsDefinition);
           docsData += `- \`${functionSignature}\`\n`;
@@ -755,10 +761,10 @@ const createMd = (
             docsData += `  ${functionsDefinition.object.description}\n`;
           }
         });
-        docsData += `\n`;
+        docsData += '\n';
       }
       if (element.functions !== undefined && element.functions.length > 0) {
-        docsData += `methods:\n\n`;
+        docsData += 'methods:\n\n';
         element.functions.forEach((functionsDefinition: MethodObject) => {
           const functionSignature = tsMethodSignature(functionsDefinition);
           docsData += `- \`${functionSignature}\`\n`;
@@ -766,16 +772,16 @@ const createMd = (
             docsData += `  ${functionsDefinition.object.description}\n\n`;
           }
         });
-        docsData += `\n`;
+        docsData += '\n';
       }
       if (element.properties !== undefined && element.properties.length > 0) {
-        docsData += `properties:\n\n`;
+        docsData += 'properties:\n\n';
         element.properties.forEach((propertyDefinition: PropertyObject) => {
           docsData += `- \`${propertyDefinition.object.name}: ${
             propertyDefinition.object.tsType || 'any'
           }\`\n`;
         });
-        docsData += `\n`;
+        docsData += '\n';
       }
     });
   }
