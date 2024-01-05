@@ -80,4 +80,6 @@ if (EMSCRIPTEN)
     target_link_options(CodeCraftedGeometryJs PRIVATE ${EMSCRIPTEN_ASMJS_OPTIONS} "SHELL:-s EXPORT_NAME=\"'CodeCraftedGeometry'\"")
 endif()
 
-add_subdirectory(tests)
+if (NOT EMSCRIPTEN)
+    add_subdirectory(tests)
+endif()

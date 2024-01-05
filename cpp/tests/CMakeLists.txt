@@ -16,7 +16,7 @@ include_directories (
 
 set(
     Catch2SourceFiles
-    ../../submodules/catch2/extras/catch_amalgamated.cpp
+    ../../submodules/Catch2/extras/catch_amalgamated.cpp
     )
 
 set(

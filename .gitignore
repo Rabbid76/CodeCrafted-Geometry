@@ -1,5 +1,5 @@
 .vscode/settings.json
 /build
 /buildTs
-/buildWASM
+/buildWasm
 /node_modules
