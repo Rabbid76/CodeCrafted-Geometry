@@ -9,7 +9,7 @@ const generateInterfaces = async () => {
     [
       {
         type: 'ts',
-        filepath: './ts/client/embind/CodeCraftedGeometryInterface.ts',
+        filepath: './ts/embind/CodeCraftedGeometryInterface.ts',
         template: './.ci/CodeCraftedGeometry.ts.in',
       },
       {

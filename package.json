@@ -4,25 +4,29 @@
   "description": "",
   "scripts": {
     "preinstall": "git submodule update --init --recursive",
+    "all": "npm run update:modules && npm run format && npm run build:embind && node dist/.ci/wasm/buildScripts.js build copy copy-test && npm run build:ts && jest",
     "update:modules": "ncu -u && npm update && npm i",
     "format": "prettier . --write --ignore-path .prettierignore && npx eslint ./ts/client/** ./ts/server/** --fix",
-    "copy:wasm": "copyfiles --flat ./.ci/*.d.ts ./buildWasm/cpp/ && copyfiles --flat ./buildWasm/cpp/*.wasm ./dist/client/",
+    "copy:wasm": "node dist/.ci/wasm/buildScripts.js copy",
     "build:.ci:ts": "tsc -p ./.ci",
     "build:embind": "npm run build:.ci:ts && node dist/.ci/embind/generateWasmInterfaces.js",
-    "build:wasm": "npm run build:.ci:ts && node dist/.ci/wasm/buildScripts.js build && npm run copy:wasm",
+    "build:wasm": "npm run build:.ci:ts && node dist/.ci/wasm/buildScripts.js build copy",
+    "build:wasm:debug": "npm run build:.ci:ts && node dist/.ci/wasm/buildScripts.js build-debug copy",
     "build:client": "webpack --config ./ts/client/webpack.prod.js",
     "build:server": "tsc -p ./ts/server",
-    "build": "npm run build:embind && npm run build:wasm && npm run build:client && npm run build:server",
+    "build:ts": "npm run build:client && npm run build:server",
+    "build": "npm run build:embind && npm run build:wasm && npm run build:ts",
     "dev": "webpack serve --config ./ts/client/webpack.dev.js",
     "start": "node ./dist/server/server.js",
-    "test": "jest",
-    "test:build": "npm run build && npm run test"
+    "test": "npm run build:server && node dist/.ci/wasm/buildScripts.js copy-test && jest",
+    "test1": "jest"
   },
   "author": "Rabbid76",
   "license": "ISC",
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@types/dat.gui": "^0.7.12",
+    "@types/fs-extra": "^11.0.4",
     "@types/express": "^4.17.21",
     "@types/glob": "^8.1.0",
     "@types/jest": "^29.5.11",
@@ -54,5 +58,10 @@
     "dat.gui": "^0.7.9",
     "express": "^4.18.2",
     "three": "^0.160.0"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
   }
 }

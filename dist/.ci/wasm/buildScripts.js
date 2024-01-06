@@ -31,9 +31,9 @@ const path = __importStar(require("path"));
 const fs = __importStar(require("fs"));
 const child_process_1 = __importDefault(require("child_process"));
 const glob = __importStar(require("glob"));
-const rootDirectoryName = 'CodeCrafted-Geometry';
 const rootDir = '.';
 const wasmBuildDir = path.join('buildWasm');
+const wasmBuildBinaryDir = path.join('buildWasm/cpp');
 const commands = process_1.default.argv.slice(2);
 let commandError = false;
 if (commands.length === 0) {
@@ -41,7 +41,7 @@ if (commands.length === 0) {
     commandError = true;
 }
 else {
-    const knownCommands = ['build', 'build-debug', 'copyWasm4Test'];
+    const knownCommands = ['build', 'build-debug', 'copy', 'copy-test'];
     for (const command of commands) {
         if (!knownCommands.includes(command)) {
             console.log(`unknown command: ${command}`);
@@ -54,6 +54,8 @@ if (commandError) {
     console.log('available commands:');
     console.log('  build - build wasm with wasm-exceptions and asm_js');
     console.log('  build-debug - build wasm with wasm-exceptions and asm_js with debug information');
+    console.log('  copy - copy wasm to source and distribution directory');
+    console.log('  copy-test - copy wasm to test directory');
     process_1.default.exit(0);
 }
 const buildWasmCommands = commands.filter((element) => ['build', 'build-debug'].includes(element));
@@ -75,7 +77,10 @@ const run = async () => {
             case 'build-debug':
                 await buildWasm(true);
                 break;
-            case 'copyWasm4Test':
+            case 'copy':
+                await copyWasm();
+                break;
+            case 'copy-test':
                 await copyWasm4Test();
                 break;
         }
@@ -116,9 +121,16 @@ const copyFiles = async (sourcePattern, targetDir) => {
         }
     }
 };
+const copyWasm = async () => {
+    await copyFiles(`${wasmBuildBinaryDir}/CodeCraftedGeometryWasm*.*`, 'ts/wasm');
+    await copyFiles(`${wasmBuildBinaryDir}/CodeCraftedGeometryJs*.*`, 'ts/wasm');
+    await copyFiles('ts/wasm/CodeCraftedGeometryWasm.wasm', 'dist/client');
+};
 const copyWasm4Test = async () => {
-    await copyFiles('node/wasm/*', 'node/dist/wasm');
-    await copyFiles('node/asm_js/*', 'node/dist/asm_js');
+    await copyFiles('ts/wasm/CodeCraftedGeometryWasm.wasm', 'dist/wasm');
+    await copyFiles('ts/wasm/CodeCraftedGeometryWasm.js', 'dist/wasm');
+    await copyFiles('ts/wasm/CodeCraftedGeometryJs.js', 'dist/wasm');
+    await copyFiles('ts/wasm/CodeCraftedGeometryJs.js.mem', 'dist/wasm');
 };
 run();
 //# sourceMappingURL=buildScripts.js.map

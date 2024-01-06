@@ -4,7 +4,7 @@ import { TransformControls } from 'three/examples/jsm/controls/TransformControls
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import Stats from 'three/examples/jsm/libs/stats.module';
 import { GUI } from 'dat.gui';
-import { default as CodeCraftedGeometry } from '../../buildWasm/cpp/CodeCraftedGeometryWasm';
+import { default as CodeCraftedGeometry } from '../wasm/CodeCraftedGeometryWasm';
 
 export const helloCube = async (canvas: HTMLCanvasElement) => {
   const meshGenerator = await CodeCraftedGeometry();

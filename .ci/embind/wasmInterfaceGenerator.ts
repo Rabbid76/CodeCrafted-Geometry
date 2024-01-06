@@ -508,7 +508,7 @@ const createTsInterface = (
     element.fields.forEach((fields: FieldObject) => {
       const access =
         fields.object.cppGetter && !fields.object.cppSetter ? 'readonly ' : '';
-      classInterfaceData += `    ${access}${fields.object.name}${
+      classInterfaceData += `  ${access}${fields.object.name}${
         fields.object.optional ? '?' : ''
       }: ${fields.object.tsType || 'any'};\n`;
     });
@@ -517,39 +517,39 @@ const createTsInterface = (
   interfaceDefinitions.classes.forEach((element: ClassObject) => {
     classInterfaceData += `export interface ${element.object.name} {\n`;
     if (element.constructors.length > 0) {
-      classInterfaceData += `    new(): ${element.object.name};\n`;
+      classInterfaceData += `  new(): ${element.object.name};\n`;
     }
     element.classFunctions.forEach((functionsDefinition: MethodObject) => {
       const functionSignature = tsMethodSignature(functionsDefinition);
-      classInterfaceData += `    ${functionSignature};\n`;
+      classInterfaceData += `  ${functionSignature};\n`;
     });
     element.functions.forEach((functionsDefinition: MethodObject) => {
       const functionSignature = tsMethodSignature(functionsDefinition);
-      classInterfaceData += `    ${functionSignature};\n`;
+      classInterfaceData += `  ${functionSignature};\n`;
     });
     element.properties.forEach((propertyDefinition: PropertyObject) => {
       const access = !propertyDefinition.object.cppSetter ? 'readonly ' : '';
-      classInterfaceData += `    ${access}${propertyDefinition.object.name} : ${propertyDefinition.object.tsType};\n`;
+      classInterfaceData += `  ${access}${propertyDefinition.object.name} : ${propertyDefinition.object.tsType};\n`;
     });
     classInterfaceData += '}\n\n';
   });
   if (interfaceDefinitions.functions || interfaceDefinitions.classes) {
     classInterfaceData += `export interface ${containerName} {\n`;
     interfaceDefinitions.vectors.forEach((element: VectorObject) => {
-      classInterfaceData += `    ${element.object.name} : ${element.object.name};\n`;
+      classInterfaceData += `  ${element.object.name} : ${element.object.name};\n`;
     });
     interfaceDefinitions.maps.forEach((element: MapObject) => {
-      classInterfaceData += `    ${element.object.name} : ${element.object.name};\n`;
+      classInterfaceData += `  ${element.object.name} : ${element.object.name};\n`;
     });
     interfaceDefinitions.templates.forEach((element: TemplateObject) => {
-      classInterfaceData += `    ${element.object.name} : ${element.object.name};\n`;
+      classInterfaceData += `  ${element.object.name} : ${element.object.name};\n`;
     });
     interfaceDefinitions.classes.forEach((element: ClassObject) => {
-      classInterfaceData += `    ${element.object.name} : ${element.object.name};\n`;
+      classInterfaceData += `  ${element.object.name} : ${element.object.name};\n`;
     });
     interfaceDefinitions.functions.forEach((element: FunctionObject) => {
       const functionSignature = tsMethodSignature(element);
-      classInterfaceData += `    ${functionSignature};\n`;
+      classInterfaceData += `  ${functionSignature};\n`;
     });
     classInterfaceData += '}';
   }
@@ -564,21 +564,21 @@ const createCppInterface = (
 ): string => {
   let enumInterfaceData: string = '';
   interfaceDefinitions.enums.forEach((element: EnumObject) => {
-    enumInterfaceData += `    emscripten::enum_<${element.object.cppType}>("${element.object.name}")\n`;
+    enumInterfaceData += `  emscripten::enum_<${element.object.cppType}>("${element.object.name}")\n`;
     element.values.forEach((value: ValueObject) => {
-      enumInterfaceData += `        .value("${value.object.value}", ${value.object.cppValue})\n`;
+      enumInterfaceData += `    .value("${value.object.value}", ${value.object.cppValue})\n`;
     });
-    enumInterfaceData += '        ;\n';
+    enumInterfaceData += '    ;\n';
   });
   let valueObjectInterfaceData: string = '';
   interfaceDefinitions.valueObjects.forEach((element: ValueObjectObject) => {
-    valueObjectInterfaceData += `    emscripten::value_object<${element.object.cppType}>("${element.object.name}")\n`;
+    valueObjectInterfaceData += `  emscripten::value_object<${element.object.cppType}>("${element.object.name}")\n`;
     element.fields.forEach((field: FieldObject) => {
       if (field.object.cppAttribute) {
         const templateSignature: string = field.object.cppType
           ? `<${element.object.cppType}, ${field.object.cppType}>`
           : '';
-        valueObjectInterfaceData += `        .field${templateSignature}("${field.object.name}", &${field.object.cppAttribute})\n`;
+        valueObjectInterfaceData += `    .field${templateSignature}("${field.object.name}", &${field.object.cppAttribute})\n`;
       } else if (field.object.cppGetter && field.object.cppSetter) {
         let templateSignature: string = '';
         const className = field.object.cppClassType
@@ -593,34 +593,34 @@ const createCppInterface = (
             ? `<${field.object.cppType}(*)(const ${className}&), void(*)(${className}&, const ${field.object.cppType}&)>`
             : '';
         }
-        valueObjectInterfaceData += `        .field${templateSignature}("${field.object.name}", ${field.object.cppGetter}, ${field.object.cppSetter})\n`;
+        valueObjectInterfaceData += `    .field${templateSignature}("${field.object.name}", ${field.object.cppGetter}, ${field.object.cppSetter})\n`;
       }
     });
-    valueObjectInterfaceData += '        ;\n';
+    valueObjectInterfaceData += '    ;\n';
   });
   let vectorInterfaceData: string = '';
   interfaceDefinitions.vectors.forEach((element: VectorObject) => {
-    vectorInterfaceData += `    emscripten::register_vector<${element.object.cppType}>("${element.object.name}");\n`;
+    vectorInterfaceData += `  emscripten::register_vector<${element.object.cppType}>("${element.object.name}");\n`;
   });
   let mapInterfaceData: string = '';
   interfaceDefinitions.maps.forEach((element: MapObject) => {
-    mapInterfaceData += `    emscripten::register_map<${element.object.cppKeyType}, ${element.object.cppValueType}>("${element.object.name}");\n`;
+    mapInterfaceData += `  emscripten::register_map<${element.object.cppKeyType}, ${element.object.cppValueType}>("${element.object.name}");\n`;
   });
   let templateInterfaceData: string = '';
   interfaceDefinitions.templates.forEach((element: TemplateObject) => {
-    templateInterfaceData += `    ${element.cppFactory}<${element.object.cppType}>("${element.object.name}");\n`;
+    templateInterfaceData += `  ${element.cppFactory}<${element.object.cppType}>("${element.object.name}");\n`;
   });
   let classInterfaceData: string = '';
   interfaceDefinitions.classes.forEach((element: ClassObject) => {
     const baseClassSignature = element.object.cppBaseClass
       ? `, ${element.object.cppBaseClass}`
       : '';
-    classInterfaceData += `    emscripten::class_<${element.object.cppType}${baseClassSignature}>("${element.object.name}")\n`;
+    classInterfaceData += `  emscripten::class_<${element.object.cppType}${baseClassSignature}>("${element.object.name}")\n`;
     element.constructors.forEach((constructorDefinition: MethodObject) => {
       if (constructorDefinition.object.preprocessorDefinition) {
         classInterfaceData += `#ifdef ${constructorDefinition.object.preprocessorDefinition}\n`;
       }
-      classInterfaceData += `        ${cppSmartPointerConstructorSignature(
+      classInterfaceData += `    ${cppSmartPointerConstructorSignature(
         constructorDefinition
       )}\n`;
       if (constructorDefinition.object.preprocessorDefinition) {
@@ -631,7 +631,7 @@ const createCppInterface = (
       if (classFunctionsDefinition.object.preprocessorDefinition) {
         classInterfaceData += `#ifdef ${classFunctionsDefinition.object.preprocessorDefinition}\n`;
       }
-      classInterfaceData += `        ${cppClassFunctionSignature(
+      classInterfaceData += `    ${cppClassFunctionSignature(
         classFunctionsDefinition
       )}\n`;
       if (classFunctionsDefinition.object.preprocessorDefinition) {
@@ -642,7 +642,7 @@ const createCppInterface = (
       if (methodDefinition.object.preprocessorDefinition) {
         classInterfaceData += `#ifdef ${methodDefinition.object.preprocessorDefinition}\n`;
       }
-      classInterfaceData += `        ${cppMethodSignature(
+      classInterfaceData += `    ${cppMethodSignature(
         element.object,
         methodDefinition
       )}\n`;
@@ -661,20 +661,20 @@ const createCppInterface = (
           : 'property';
       if (propertyDefinition.object.cppSetter) {
         const templateSignature: string = '';
-        classInterfaceData += `        .${bindingFunction}${templateSignature}("${item.name}", &${item.cppGetter}, &${item.cppSetter})\n`;
+        classInterfaceData += `    .${bindingFunction}${templateSignature}("${item.name}", &${item.cppGetter}, &${item.cppSetter})\n`;
       } else {
         const templateSignature = '';
-        classInterfaceData += `        .${bindingFunction}${templateSignature}("${item.name}", &${item.cppGetter})\n`;
+        classInterfaceData += `    .${bindingFunction}${templateSignature}("${item.name}", &${item.cppGetter})\n`;
       }
       if (propertyDefinition.object.preprocessorDefinition) {
         classInterfaceData += '#endif\n';
       }
     });
-    classInterfaceData += '        ;\n';
+    classInterfaceData += '    ;\n';
   });
   let functionInterfaceData: string = '';
   interfaceDefinitions.functions.forEach((element: FunctionObject) => {
-    functionInterfaceData += `    ${cppFunctionSignature(element)};\n`;
+    functionInterfaceData += `  ${cppFunctionSignature(element)};\n`;
   });
 
   let cppInterfaceData: string = interfaceName

@@ -7,6 +7,6 @@ const config: Config.InitialOptions = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testPathIgnorePatterns: ['^.*.(\\.d\\.ts)$'],
-  roots: ['./ts/'],
+  roots: ['./dist/server'],
 };
 export default config;

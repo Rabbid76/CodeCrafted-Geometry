@@ -60,8 +60,8 @@ if (EMSCRIPTEN)
         ${EMSCRIPTEN_OPTIONS}
         "SHELL:-s WASM=1" 
         "SHELL:-s EXPORT_NAME=\"'CodeCraftedGeometry'\""
-        "SHELL:-s ENVIRONMENT=web"
-        #"-lnodefs.js"
+        "SHELL:-s ENVIRONMENT=web,node" # web,node
+        "-lnodefs.js"
         -fwasm-exceptions
         )
 
@@ -77,7 +77,11 @@ if (EMSCRIPTEN)
         embind/CodeCraftedGeometryEmbind.cpp
         )
     target_compile_options(CodeCraftedGeometryJs PRIVATE ${EMSCRIPTEN_ASMJS_OPTIONS})
-    target_link_options(CodeCraftedGeometryJs PRIVATE ${EMSCRIPTEN_ASMJS_OPTIONS} "SHELL:-s EXPORT_NAME=\"'CodeCraftedGeometry'\"")
+    target_link_options(CodeCraftedGeometryJs PRIVATE 
+        ${EMSCRIPTEN_ASMJS_OPTIONS} 
+        "SHELL:-s EXPORT_NAME=\"'CodeCraftedGeometry'\""
+        "SHELL:-s ENVIRONMENT=web,node"
+        )
 endif()
 
 if (NOT EMSCRIPTEN)

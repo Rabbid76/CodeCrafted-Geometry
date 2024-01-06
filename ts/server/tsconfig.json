@@ -3,7 +3,7 @@
     "target": "ES2019",
     "skipLibCheck": true,
     "module": "commonjs",
-    "outDir": "../../dist/server",
+    "outDir": "../../dist",
     "esModuleInterop": true,
     "strict": true
   },
