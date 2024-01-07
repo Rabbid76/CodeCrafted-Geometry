@@ -1,19 +1,24 @@
-import { default as ConfiguratorKernelJs } from '../../wasm/CodeCraftedGeometryJs';
-import { default as ConfiguratorKernelWasm } from '../../wasm/CodeCraftedGeometryWasm';
+import { CodeCraftedGeometryInstance } from '../../embind/CodeCraftedGeometry';
 import { describe, expect, it } from '@jest/globals';
 
-describe('load asm_js', () => {
-  it('get version', async () => {
-    const codeCraftedGeometry = await ConfiguratorKernelJs();
-    const version = codeCraftedGeometry.getVersion();
-    expect(version).toBe('0.0.1');
-  });
-});
+const testCases = [[true], [false]];
+const timeout = 5000;
 
-describe('load wasm', () => {
-  it('get version', async () => {
-    const codeCraftedGeometry = await ConfiguratorKernelWasm();
-    const version = codeCraftedGeometry.getVersion();
-    expect(version).toBe('0.0.1');
-  });
+describe('load CodeCraftedGeometry', () => {
+  const ioContext: any = undefined;
+  it.each(testCases)(
+    'getVersion, use wasm: %s',
+    async (useWasm: boolean) => {
+      const codeCraftedGeometryInstance =
+        await CodeCraftedGeometryInstance.newCodeCraftedGeometry(
+          ioContext,
+          useWasm,
+          useWasm
+        );
+      const version =
+        codeCraftedGeometryInstance.getModule().getVersion() ?? '';
+      expect(version).toBe('0.0.1');
+    },
+    timeout
+  );
 });

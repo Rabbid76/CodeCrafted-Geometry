@@ -5,6 +5,16 @@
     }
   ],
   "settings": {
-    "C_Cpp.codeAnalysis.runAutomatically": true
+    "C_Cpp.codeAnalysis.runAutomatically": true,
+    "cSpell.words": [
+      "camelcase",
+      "copyfiles",
+      "embind",
+      "envmap",
+      "nocheck",
+      "preinstall",
+      "Rabbid",
+      "singleline"
+    ]
   }
 }

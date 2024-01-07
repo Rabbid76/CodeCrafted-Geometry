@@ -29,6 +29,7 @@ module.exports = {
     '*.exr',
     'beta/**/*',
     'dist/**/*',
+    'jest.config.js',
     'patches/**/*',
     'resources/**/*',
     'ts/client/webpack.*.js',

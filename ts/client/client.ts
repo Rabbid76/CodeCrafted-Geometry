@@ -4,41 +4,42 @@ import { TransformControls } from 'three/examples/jsm/controls/TransformControls
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import Stats from 'three/examples/jsm/libs/stats.module';
 import { GUI } from 'dat.gui';
-import { default as CodeCraftedGeometry } from '../wasm/CodeCraftedGeometryWasm';
+import { CodeCraftedGeometryInstance } from '../embind/CodeCraftedGeometry';
 
 export const helloCube = async (canvas: HTMLCanvasElement) => {
-  const meshGenerator = await CodeCraftedGeometry();
-  console.log('MeshGenerator version: ' + meshGenerator.getVersion());
-  meshGenerator.setIOContext({
-    log: (message: string) => console.log(message),
-    newMesh: (
-      id: string,
-      vertices: Float32Array,
-      indices: Uint32Array,
-      normals: Float32Array,
-      uvs: Float32Array
-    ): void => {
-      console.log('newMesh: ' + id);
-      const geometry = new THREE.BufferGeometry();
-      geometry.setAttribute(
-        'position',
-        new THREE.BufferAttribute(Float32Array.from(vertices), 3)
-      );
-      geometry.setAttribute(
-        'normal',
-        new THREE.BufferAttribute(Float32Array.from(normals), 3)
-      );
-      geometry.setAttribute(
-        'uv',
-        new THREE.BufferAttribute(Float32Array.from(uvs), 3)
-      );
-      geometry.setIndex(
-        new THREE.BufferAttribute(Uint32Array.from(indices), 1)
-      );
-      geometry.rotateX(Math.PI / 2);
-      mesh.geometry = geometry;
-    },
-  });
+  const codeCraftedGeometry =
+    await CodeCraftedGeometryInstance.newCodeCraftedGeometry({
+      log: (message: string) => console.log(message),
+      newMesh: (
+        id: string,
+        vertices: Float32Array,
+        indices: Uint32Array,
+        normals: Float32Array,
+        uvs: Float32Array
+      ): void => {
+        console.log('newMesh: ' + id);
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute(
+          'position',
+          new THREE.BufferAttribute(Float32Array.from(vertices), 3)
+        );
+        geometry.setAttribute(
+          'normal',
+          new THREE.BufferAttribute(Float32Array.from(normals), 3)
+        );
+        geometry.setAttribute(
+          'uv',
+          new THREE.BufferAttribute(Float32Array.from(uvs), 3)
+        );
+        geometry.setIndex(
+          new THREE.BufferAttribute(Uint32Array.from(indices), 1)
+        );
+        geometry.rotateX(Math.PI / 2);
+        mesh.geometry = geometry;
+      },
+    });
+  const generatorModule = codeCraftedGeometry.getModule();
+  console.log('Generator version: ' + generatorModule.getVersion());
 
   const renderer = new THREE.WebGLRenderer({
     canvas,
@@ -118,7 +119,7 @@ export const helloCube = async (canvas: HTMLCanvasElement) => {
   meshTransformControl.visible = false;
   scene.add(meshTransformControl);
 
-  meshGenerator.createMesh('my shape', 2);
+  generatorModule.createMesh('my shape', 2);
 
   const stats = new Stats();
   document.body.appendChild(stats.dom);
