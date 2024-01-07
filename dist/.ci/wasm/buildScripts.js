@@ -124,7 +124,6 @@ const copyFiles = async (sourcePattern, targetDir) => {
 const copyWasm = async () => {
     await copyFiles(`${wasmBuildBinaryDir}/CodeCraftedGeometryWasm*.*`, 'ts/wasm');
     await copyFiles(`${wasmBuildBinaryDir}/CodeCraftedGeometryJs*.*`, 'ts/wasm');
-    await copyFiles('ts/wasm/CodeCraftedGeometryWasm.wasm', 'dist/client');
 };
 const copyWasm4Test = async () => {
     await copyFiles('ts/wasm/CodeCraftedGeometryWasm.wasm', 'dist/wasm');

@@ -116,7 +116,6 @@ const copyWasm = async (): Promise<void> => {
     'ts/wasm'
   );
   await copyFiles(`${wasmBuildBinaryDir}/CodeCraftedGeometryJs*.*`, 'ts/wasm');
-  await copyFiles('ts/wasm/CodeCraftedGeometryWasm.wasm', 'dist/client');
 };
 
 const copyWasm4Test = async (): Promise<void> => {

@@ -32,7 +32,6 @@ module.exports = {
     'jest.config.js',
     'patches/**/*',
     'resources/**/*',
-    'ts/client/webpack.*.js',
     '/*.js',
     'ts/__tests__/**/*',
   ],

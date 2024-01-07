@@ -9,11 +9,9 @@
 ### Project
 
 - setIOContext: any -> interface
-- webpack bundle WASM
 - github actions build and test
-- [jest](https://jestjs.io/) load .wasm / copy wasm with webpack (`CopyWebpackPlugin` see three-js-ao-pass/bundler/webpack.common.js)
+- [jest](https://jestjs.io/) load .wasm
 - package.json version -> preprocessor definition for C++ `getVersion` interface
-- move webpack.\* to ./ci/bundler
 
 ### Example ideas
 
